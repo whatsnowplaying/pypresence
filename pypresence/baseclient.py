@@ -16,12 +16,12 @@ from .utils import get_ipc_path, get_event_loop
 class BaseClient:
 
     def __init__(self, client_id: str, **kwargs):
-        pipe = kwargs.get('pipe', None)
-        loop = kwargs.get('loop', None)
-        handler = kwargs.get('handler', None)
+        pipe = kwargs.get('pipe')
+        loop = kwargs.get('loop')
+        handler = kwargs.get('handler')
         self.isasync = kwargs.get('isasync', False)
 
-        client_id = str(client_id)
+        client_id = client_id
         self.ipc_path = get_ipc_path(pipe)
 
         if not self.ipc_path:
@@ -57,10 +57,7 @@ class BaseClient:
             loop.set_exception_handler(err_handler)
             self.handler = handler
 
-        if getattr(self, "on_event", None):  # Tasty bad code ;^)
-            self._events_on = True
-        else:
-            self._events_on = False
+        self._events_on = bool(getattr(self, "on_event", None))
 
     def update_event_loop(self, loop):
         # noinspection PyAttributeOutsideInit
@@ -103,9 +100,9 @@ class BaseClient:
             payload.encode('utf-8'))
 
     async def handshake(self):
-        if sys.platform == 'linux' or sys.platform == 'darwin':
+        if sys.platform in ['linux', 'darwin']:
             self.sock_reader, self.sock_writer = await asyncio.open_unix_connection(self.ipc_path)
-        elif sys.platform == 'win32' or sys.platform == 'win64':
+        elif sys.platform in ['win32', 'win64']:
             self.sock_reader = asyncio.StreamReader(loop=self.loop)
             reader_protocol = asyncio.StreamReaderProtocol(
                 self.sock_reader, loop=self.loop)

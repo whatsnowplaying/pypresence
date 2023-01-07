@@ -35,9 +35,9 @@ class Payload:
         # They should already be an int because we give typehints, but some people are fucking stupid and use
         # IDLE or some other stupid shit.
         if start:
-            start = int(start)
+            start = start
         if end:
-            end = int(end)
+            end = end
 
         if activity is None:
             act_details = None
@@ -86,11 +86,8 @@ class Payload:
     def authorize(cls, client_id: str, scopes: List[str]):
         payload = {
             "cmd": "AUTHORIZE",
-            "args": {
-                "client_id": str(client_id),
-                "scopes": scopes
-            },
-            "nonce": '{:.20f}'.format(cls.time())
+            "args": {"client_id": client_id, "scopes": scopes},
+            "nonce": '{:.20f}'.format(cls.time()),
         }
         return cls(payload)
 
@@ -121,10 +118,8 @@ class Payload:
     def get_guild(cls, guild_id: str):
         payload = {
             "cmd": "GET_GUILD",
-            "args": {
-                "guild_id": str(guild_id),
-            },
-            "nonce": '{:.20f}'.format(cls.time())
+            "args": {"guild_id": guild_id},
+            "nonce": '{:.20f}'.format(cls.time()),
         }
 
         return cls(payload)
@@ -133,10 +128,8 @@ class Payload:
     def get_channels(cls, guild_id: str):
         payload = {
             "cmd": "GET_CHANNELS",
-            "args": {
-                "guild_id": str(guild_id),
-            },
-            "nonce": '{:.20f}'.format(cls.time())
+            "args": {"guild_id": guild_id},
+            "nonce": '{:.20f}'.format(cls.time()),
         }
 
         return cls(payload)
@@ -145,10 +138,8 @@ class Payload:
     def get_channel(cls, channel_id: str):
         payload = {
             "cmd": "GET_CHANNEL",
-            "args": {
-                "channel_id": str(channel_id),
-            },
-            "nonce": '{:.20f}'.format(cls.time())
+            "args": {"channel_id": channel_id},
+            "nonce": '{:.20f}'.format(cls.time()),
         }
 
         return cls(payload)
@@ -160,15 +151,12 @@ class Payload:
         payload = {
             "cmd": "SET_USER_VOICE_SETTINGS",
             "args": {
-                "user_id": str(user_id),
-                "pan": {
-                    "left": pan_left,
-                    "right": pan_right
-                },
+                "user_id": user_id,
+                "pan": {"left": pan_left, "right": pan_right},
                 "volume": volume,
-                "mute": mute
+                "mute": mute,
             },
-            "nonce": '{:.20f}'.format(cls.time())
+            "nonce": '{:.20f}'.format(cls.time()),
         }
 
         return cls(payload, True)
@@ -177,10 +165,8 @@ class Payload:
     def select_voice_channel(cls, channel_id: str):
         payload = {
             "cmd": "SELECT_VOICE_CHANNEL",
-            "args": {
-                "channel_id": str(channel_id),
-            },
-            "nonce": '{:.20f}'.format(cls.time())
+            "args": {"channel_id": channel_id},
+            "nonce": '{:.20f}'.format(cls.time()),
         }
 
         return cls(payload)
@@ -200,10 +186,8 @@ class Payload:
     def select_text_channel(cls, channel_id: str):
         payload = {
             "cmd": "SELECT_TEXT_CHANNEL",
-            "args": {
-                "channel_id": str(channel_id),
-            },
-            "nonce": '{:.20f}'.format(cls.time())
+            "args": {"channel_id": channel_id},
+            "nonce": '{:.20f}'.format(cls.time()),
         }
 
         return cls(payload)
@@ -286,10 +270,8 @@ class Payload:
     def send_activity_join_invite(cls, user_id: str):
         payload = {
             "cmd": "SEND_ACTIVITY_JOIN_INVITE",
-            "args": {
-                "user_id": str(user_id)
-            },
-            "nonce": '{:.20f}'.format(cls.time())
+            "args": {"user_id": user_id},
+            "nonce": '{:.20f}'.format(cls.time()),
         }
 
         return cls(payload)
@@ -298,10 +280,8 @@ class Payload:
     def close_activity_request(cls, user_id: str):
         payload = {
             "cmd": "CLOSE_ACTIVITY_REQUEST",
-            "args": {
-                "user_id": str(user_id)
-            },
-            "nonce": '{:.20f}'.format(cls.time())
+            "args": {"user_id": user_id},
+            "nonce": '{:.20f}'.format(cls.time()),
         }
 
         return cls(payload)

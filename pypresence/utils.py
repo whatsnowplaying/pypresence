@@ -53,9 +53,7 @@ def get_event_loop(force_fresh=False):
             loop = asyncio.get_running_loop()
         except RuntimeError:
             return asyncio.new_event_loop()
-        if loop.is_closed():
-            return asyncio.new_event_loop()
-        return loop
+        return asyncio.new_event_loop() if loop.is_closed() else loop
     elif sys.platform == 'win32':
         if force_fresh:
             return asyncio.ProactorEventLoop()
